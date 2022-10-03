@@ -16,7 +16,6 @@ class CommentFactory extends Factory
      */
     public function definition()
     {
-        $postId = FactoryHelper::getRandomModelId(Post::class);
 
         return [
             'body' =>[],

@@ -25,6 +25,7 @@ class CommentSeeder extends Seeder
 
         Comment::factory(3)
         //->for(Post::factory(1) , 'post')
+
         ->create();
 
         $this->enableForeignKeys();
