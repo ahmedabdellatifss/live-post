@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\Routes\RouteHelper;
 use App\Models\User;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -18,7 +19,12 @@ use PHPUnit\TextUI\XmlConfiguration\Group;
 */
 Route::prefix('v1')
     ->group(function(){
-        require __DIR__ . '/api/v1/users.php';
+        RouteHelper::includeRouteFiles(__DIR__.'/api/v1');
+
+        //require the file v1 folder recursively
+        // require __DIR__ . '/api/v1/users.php';
+        // require __DIR__ . '/api/v1/posts.php';
+        // require __DIR__ . '/api/v1/comments.php';
     });
 
 
