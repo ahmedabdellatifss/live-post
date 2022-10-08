@@ -6,6 +6,7 @@ use App\Models\Post;
 
 use App\Http\Requests\UpdatePostRequest;
 use App\Http\Resources\PostResource;
+use App\Repositories\PostRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -30,19 +31,13 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return PostResource
      */
-    public function store(Request $request)
+    public function store(Request $request, PostRepository $repository)
     {
-        $created = DB::transaction(function () use ($request) {
-
-            $created = Post::query()->create([
-                'title' => $request->title,
-                'body' => $request->body,
-            ]);
-            if($userIds = $request->user_ids){
-                $created->users()->sync($userIds);
-            }
-            return $created;
-        });
+        $created = $repository->create($request->only([
+            'title',
+            'body',
+            'user_ids'
+        ]));
 
         return new PostResource($created);
     }
@@ -65,19 +60,13 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return PostResource | JsonResponse
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, Post $post, PostRepository $repository)
     {
-        //$post->update($request->only(['title', 'body']));
-        $updated = $post->update([
-            'title' => $request->title ?? $post->title,
-            'body' => $request->body ?? $post->body,
-        ]);
-        if(!$updated){
-            return new JsonResponse([
-                'error' => 'Failed to update model.'
-            ], 400);
-        }
-
+        $post = $repository->update($post, $request->only([
+            'title',
+            'body',
+            'user_ids',
+        ]));
         return new PostResource($post);
 
     }
@@ -89,19 +78,11 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy(Post $post, PostRepository $repository)
     {
-        $deleted = $post->forceDelete();
-
-        if(!$deleted){
-            return new JsonResponse([
-                'errors'=>[
-                    'Could not delete resource.'
-                ]
-            ],400);
-        }
+        $post = $repository->forceDelete($post);
         return new JsonResponse([
-            'data'=>'success'
+            'data' => 'success'
         ]);
     }
 }
