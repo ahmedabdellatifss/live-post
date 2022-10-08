@@ -34,8 +34,9 @@ Route::middleware('auth')
         ->withoutMiddleware('auth'); //if you don't need to add middleware to this route we will use withoutMiddleware
     Route::get('/users/{user}' , [UserController::class, 'show'])
         ->name('show')
-        ->where('user' , '[0-9]+')  // if you need to attach constraint to the url prameter in this case i need user parameter to be integr match to this regilarexpression [0-9]
+        ->where('user' , '[0-9]+')// if you need to attach constraint to the url prameter in this case i need user parameter to be integr match to this regilarexpression [0-9]
         ->withoutMiddleware('auth');
+
     Route::post('/users' , [UserController::class, 'store'])->name('store');
     Route::patch('/users/{user}' , [UserController::class, 'update'])->name('update');
     Route::delete('/users/{user}' , [UserController::class, 'destroy'])->name('destroy');
