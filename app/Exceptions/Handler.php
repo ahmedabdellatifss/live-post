@@ -14,6 +14,7 @@ class Handler extends ExceptionHandler
      */
     protected $dontReport = [
         //
+        //GeneralJsonException::class
     ];
 
     /**
@@ -34,7 +35,11 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->reportable(function (Throwable $e) {
+        $this->reportable(function (GeneralJsonException $e) {
+            dump('1234');
+        });
+
+        $this->renderable(function(GeneralJsonException $e){
             //
         });
     }
