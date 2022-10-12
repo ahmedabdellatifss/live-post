@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 
 use App\Http\Requests\UpdatePostRequest;
-use App\Exceptions\GeneralJsonException;
+
 use App\Http\Resources\PostResource;
 use App\Repositories\PostRepository;
 use Illuminate\Http\JsonResponse;
@@ -21,7 +21,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        throw new GeneralJsonException('some errorrrrr' , 422);
+
         $posts = Post::query()->paginate(10);
 
         return PostResource::collection($posts);
