@@ -38,8 +38,11 @@ class UserController extends Controller
             'email',
         ]));
 
+        // ....
+
         return new UserResource($created);
     }
+
 
     /**
      * Display the specified resource.
