@@ -7,11 +7,11 @@ use App\Events\Models\Post\PostCreated;
 use App\Events\Models\Post\PostDeleted;
 use App\Events\Models\Post\PostUpdated;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Event;
 use App\Models\Post;
-
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class PostApiTest extends TestCase
@@ -57,7 +57,7 @@ class PostApiTest extends TestCase
         $result = $response->assertStatus(201)->json('data');
         Event::assertDispatched(PostCreated::class);
         $result = collect($result)->only(array_keys($dummy->getAttributes()));
-        
+
         $result->each(function ($value, $field) use($dummy){
             $this->assertSame(data_get($dummy, $field), $value, 'Fillable is not the same.');
         });
@@ -95,4 +95,3 @@ class PostApiTest extends TestCase
 
     }
 }
- 

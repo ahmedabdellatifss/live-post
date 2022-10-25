@@ -9,10 +9,12 @@ use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use App\Repositories\CommentRepository;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class CommentRepositoryTest extends TestCase
 {
+    use RefreshDatabase;
     public function test_create()
     {
         // 1. Define the goal
@@ -81,6 +83,6 @@ class CommentRepositoryTest extends TestCase
         $found = Comment::query()->find($dummy->id);
 
         $this->assertSame(null, $found, 'Comment is not deleted');
-        
+
     }
 }

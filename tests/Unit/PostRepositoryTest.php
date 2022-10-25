@@ -2,13 +2,17 @@
 
 namespace Tests\Unit;
 
+
+
 use App\Exceptions\GeneralJsonException;
 use App\Models\Post;
 use App\Repositories\PostRepository;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class PostRepositoryTest extends TestCase
 {
+    use RefreshDatabase;
     public function test_create()
     {
         // 1. Define the goal
@@ -27,7 +31,7 @@ class PostRepositoryTest extends TestCase
         $result = $repository->create($payload);
 
         $this->assertSame($payload['title'], $result->title, 'Post created does not have the same title.');
-    } 
+    }
 
     public function test_update()
     {
@@ -47,7 +51,6 @@ class PostRepositoryTest extends TestCase
         $updated = $repository->update($dummyPost, $payload);
         $this->assertSame($payload['title'], $updated->title, 'Post updated does not have the same title.');
     }
-
 
     public function test_delete_will_throw_exception_when_delete_post_that_doesnt_exist()
     {
@@ -74,6 +77,6 @@ class PostRepositoryTest extends TestCase
         $found = Post::query()->find($dummy->id);
 
         $this->assertSame(null, $found, 'Post is not deleted');
-        
+
     }
 }
