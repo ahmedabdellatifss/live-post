@@ -1,0 +1,286 @@
+name: 'Post Management'
+description: 'APIs to manage post.'
+endpoints:
+  -
+    httpMethods:
+      - GET
+    uri: api/v1/posts
+    metadata:
+      groupName: 'Post Management'
+      groupDescription: 'APIs to manage post.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Display a listing of posts.'
+      description: 'Gets a list of posts.'
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      page_size:
+        name: page_size
+        description: 'Size per page. Defaults to 20.'
+        required: false
+        example: 20
+        type: integer
+        custom: []
+      page:
+        name: page
+        description: 'Page to view.'
+        required: false
+        example: 1
+        type: integer
+        custom: []
+    cleanQueryParameters:
+      page_size: 20
+      page: 1
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":[{"id":204,"title":"ut","body":["abc"],"created_at":"2023-02-28T20:06:34.000000Z","updated_at":"2023-02-28T20:06:34.000000Z"},{"id":205,"title":"dolorem","body":["abc"],"created_at":"2023-02-28T20:06:34.000000Z","updated_at":"2023-02-28T20:06:34.000000Z"}]}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/v1/posts/{id}'
+    metadata:
+      groupName: 'Post Management'
+      groupDescription: 'APIs to manage post.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Display the specified post.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the post.'
+        required: true
+        example: 1
+        type: integer
+        custom: []
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":{"id":206,"title":"maxime","body":["abc"],"created_at":"2023-02-28T20:06:34.000000Z","updated_at":"2023-02-28T20:06:34.000000Z"}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/v1/posts
+    metadata:
+      groupName: 'Post Management'
+      groupDescription: 'APIs to manage post.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Store a newly created post in storage.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      title:
+        name: title
+        description: 'Title of the post.'
+        required: true
+        example: 'Amazing Post'
+        type: string
+        custom: []
+      body:
+        name: body
+        description: 'Body of the post.'
+        required: true
+        example:
+          - 'This post is super beautiful'
+        type: 'string[]'
+        custom: []
+      user_ids:
+        name: user_ids
+        description: 'The author ids of the post.'
+        required: true
+        example:
+          - 1
+          - 2
+        type: 'integer[]'
+        custom: []
+    cleanBodyParameters:
+      title: 'Amazing Post'
+      body:
+        - 'This post is super beautiful'
+      user_ids:
+        - 1
+        - 2
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":{"id":207,"title":"quia","body":["abc"],"created_at":"2023-02-28T20:06:34.000000Z","updated_at":"2023-02-28T20:06:34.000000Z"}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PATCH
+    uri: 'api/v1/posts/{id}'
+    metadata:
+      groupName: 'Post Management'
+      groupDescription: 'APIs to manage post.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update the specified post in storage.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the post.'
+        required: true
+        example: 1
+        type: integer
+        custom: []
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      title:
+        name: title
+        description: 'Title of the post.'
+        required: true
+        example: 'Amazing Post'
+        type: string
+        custom: []
+      body:
+        name: body
+        description: 'Body of the post.'
+        required: true
+        example:
+          - 'This post is super beautiful'
+        type: 'string[]'
+        custom: []
+      user_ids:
+        name: user_ids
+        description: 'The author ids of the post.'
+        required: true
+        example:
+          - 1
+          - 2
+        type: 'integer[]'
+        custom: []
+    cleanBodyParameters:
+      title: 'Amazing Post'
+      body:
+        - 'This post is super beautiful'
+      user_ids:
+        - 1
+        - 2
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":{"id":208,"title":"occaecati","body":["abc"],"created_at":"2023-02-28T20:06:34.000000Z","updated_at":"2023-02-28T20:06:34.000000Z"}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - DELETE
+    uri: 'api/v1/posts/{id}'
+    metadata:
+      groupName: 'Post Management'
+      groupDescription: 'APIs to manage post.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Remove the specified post from storage.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the post.'
+        required: true
+        example: 1
+        type: integer
+        custom: []
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+          "data": "success"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []

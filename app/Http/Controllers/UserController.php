@@ -10,10 +10,23 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
+/**
+ * @group User Management
+ *
+ * APIs to manage the user resource
+ */
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing User.
+     *
+     * Gets a list of Users.
+     *
+     * @queryParam page_size int Size per page. Defaults to 20. Example: 20
+     * @queryParam page int Page to view. Example: 20.
+     *
+     * @apiResourceCollection App\Http\Resources\UserResource
+     * @apiResourceModel App\Models\User
      *
      * @return ResourceCollection
      */
@@ -28,6 +41,10 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @bodyParam name string required Name of the user. Example: John Doe
+     * @bodyParam email string required Email of the user. Example: doe@doe.com
+     * @apiResourceCollection App\Http\Resources\UserResource
+     * @apiResourceModel App\Models\User
      * @param \Illuminate\Http\Request $request
      * @return UserResource
      */
@@ -47,6 +64,10 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
+     * @urlParam id int required User ID
+     * @apiResource App\Http\Resources\UserResource
+     * @apiResourceModel App\Models\User
+     *
      * @param \App\Models\User $user
      * @return UserResource
      */
@@ -57,7 +78,10 @@ class UserController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
+     * @bodyParam name string  Name of the user. Example: John Doe
+     * @bodyParam email string  Email of the user. Example: doe@doe.com
+     * @apiResourceCollection App\Http\Resources\UserResource
+     * @apiResourceModel App\Models\User
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\User $user
      * @return UserResource | JsonResponse
@@ -74,7 +98,9 @@ class UserController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
+     *@response 200{
+        "data":"success"
+        }
      * @param \App\Models\User $user
      * @return \Illuminate\Http\JsonResponse
      */
