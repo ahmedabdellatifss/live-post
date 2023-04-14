@@ -8,6 +8,9 @@ use App\Actions\Fortify\DummyDummy;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
+use Laravel\Fortify\Actions\AttemptToAuthenticate;
+use Laravel\Fortify\Actions\EnsureLoginIsNotThrottled;
+use Laravel\Fortify\Actions\PrepareAuthenticatedSession;
 use Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
@@ -64,11 +67,32 @@ class FortifyServiceProvider extends ServiceProvider
             return array_filter([
                 config('fortify.limiters.login') ? null : EnsureLoginIsNotThrottled::class,
                 Features::enabled(Features::twoFactorAuthentication()) ? RedirectIfTwoFactorAuthenticatable::class : null,
-               DummyDummy::class,
-               DummyDummy::class,
+            //    DummyDummy::class,
+            //    DummyDummy::class,
                 AttemptToAuthenticate::class,
                 PrepareAuthenticatedSession::class,
             ]);
         });
+
+
+        // we can customize the comfirm password logic
+        // Fortify::confirmPasswordsUsing(function ($user, $password){
+        // //    for the confirm password endpoint
+        // //    return true if password is correct
+        // //    return false if password input is wrong
+        // });
+
+        // we can customize the views that laravel fortify is sending out by using the following methods
+        // Fortify::confirmPasswordView(function (){
+        //     return view('some.view.in.your.app');
+        // });
+        // Fortify::verifyEmailView(function (){
+        //     return view('auth.verify');
+        // });
+        // Fortify::loginView(fn () => view('some.view.in.your.app'));
+        // Fortify::registerView(fn () => view('some.view.in.your.app'));
+        // Fortify::twoFactorChallengeView(fn () => view('some.view.in.your.app'));
+        // Fortify::requestPasswordResetLinkView(fn () => view('some.view.in.your.app'));
+        // Fortify::resetPasswordView(fn () => view('some.view.in.your.app'));
     }
 }

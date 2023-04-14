@@ -17,11 +17,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/app', function (){
+    return view('app');
+});
+
 Route::get('/reset-password/{token}',function($token){
     return view('auth.password-reset', ['token'=>$token]) ;
 })
 ->middleware(['guest:'.config('fortify.guard')])
 ->name('password.reset');
+
 
 
 if(\Illuminate\Support\Facades\App::environment('local')){
