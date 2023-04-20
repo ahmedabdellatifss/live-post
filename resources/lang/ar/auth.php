@@ -13,10 +13,9 @@ return [
     |
     */
 
-    'failed' => 'These credentials do not match our records.',
-    'password' => 'The provided password is incorrect.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-    'pants' => "I have only one. | I have a lot of pants.",
-    'apples'=> '[*,0] There is no apple.|{1} There is one apple.|[2,*] There are :count apples in :baskets baskets.',
-    'welcome' => 'HEYOOOO :Name :NAME :name'
+    'failed' => 'هذه المدخلات غير صحيحه.',
+    'password' => 'الرقم السري غير صحيح.',
+    'throttle' => 'محولات دخول عديدهو من فضلك حاول بعد :seconds seconds.',
+
+
 ];

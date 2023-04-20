@@ -18,9 +18,26 @@ class UserApiTest extends TestCase
 
     protected $uri = '/api/v1/users';
 
+    // tearDown() method to clear out data base redords or deleting files the we might have created in the test
+//    public function tearDown(): void
+//    {
+//        parent::tearDown();
+//        dump('heyyaa');
+//    }
+
+    public function setUp():void
+    {
+        /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
+        parent::setUp();
+        $user = User::factory()->make();
+        $this->actingAs($user);
+    }
+
     public function test_index()
     {
-        // load data in db
+
+
+        // load data in dbExpected type 'Illuminate\Contracts\Auth\Authenticatable'. Found 'Illuminate\Database\Eloquent\Co
         $users = User::factory(10)->create();
         $userIds = $users->map(fn ($user) => $user->id);
 

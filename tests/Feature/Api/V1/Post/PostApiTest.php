@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Event;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -19,6 +20,15 @@ class PostApiTest extends TestCase
     use RefreshDatabase;
 
     protected $uri = '/api/v1/posts';
+
+
+    public function setUp():void
+    {
+        /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
+        parent::setUp();
+        $user = User::factory()->make();
+        $this->actingAs($user);
+    }
 
     public function test_index()
     {
@@ -51,8 +61,9 @@ class PostApiTest extends TestCase
     {
         Event::fake();
         $dummy = Post::factory()->make();
+        $dummyUser = User::factory()->create();
 
-        $response = $this->json('post', $this->uri, $dummy->toArray());
+        $response = $this->json('post', $this->uri,array_merge($dummy->toArray(), ['user_ids' => [$dummyUser->id]]));
 
         $result = $response->assertStatus(201)->json('data');
         Event::assertDispatched(PostCreated::class);

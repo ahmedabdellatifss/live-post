@@ -6,6 +6,7 @@ use App\Events\Models\Comment\CommentCreated;
 use App\Events\Models\Comment\CommentDeleted;
 use App\Events\Models\Comment\CommentUpdated;
 use App\Models\Comment;
+use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -17,6 +18,15 @@ class CommentApiTest extends TestCase
     use RefreshDatabase;
 
     protected $uri = '/api/v1/comments';
+
+
+    public function setUp():void
+    {
+        /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
+        parent::setUp();
+        $user = User::factory()->make();
+        $this->actingAs($user);
+    }
 
     public function test_index()
     {
