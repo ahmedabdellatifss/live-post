@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\URL;
+use Illuminate\Http\Request;
+use App\Models\Post;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,33 +30,30 @@ Route::get('/reset-password/{token}',function($token){
 ->name('password.reset');
 
 
+Route::get('/shared/posts/{post}', function (\Illuminate\Http\Request $request, \App\Models\Post $post){
+
+    return "Specially made just for you 💕 ;) Post id: {$post->id}";
+
+})->name('shared.post')->middleware('signed');
+
 
 if(\Illuminate\Support\Facades\App::environment('local')){
 
-    \Illuminate\Support\Facades\App::setLocale('en');
-    // $trans = \Illuminate\Support\Facades\Lang::get('auth.failed');
-    // $trans = __('auth.password');
-    // $trans = __('auth.throttle',['seconds' => 5]);
 
-    //dd(\Illuminate\Support\Facades\App::currentLocale());
-    // dump(App::isLocal('en'));
+    Route::get('/shared/videos/{video}', function(Request $request, $video){
 
-    //you can use json file in translation
-    // $trans = __('password');
-    // dd($trans);
+        // if(!$request->hasValidSignature()){
+        //     abort(401);
+        // }
+            return 'git gud';
 
-    //$trans = trans_choice('auth.pants',0);
-    // $trans = trans_choice('auth.apples', 5, ['baskets'=>2]);
-    // dd($trans);
-
-
-    $trans = __('auth.welcome' , ['name'=> 'ahmed']);
-    dd($trans);
+    })->name('share-video')->middleware('signed');
 
     Route::get('playground' , function(){
-        $user = \App\Models\User::factory()->make();
-        Illuminate\Support\Facades\Mail::to($user)
-            ->send(new  \App\Mail\welcomeMail($user));
-        return null;
+
+        $url = URL::temporarySignedRoute('share-video', now()->addSeconds(30),[
+            'video'=> 123
+        ]);
+        return $url;
     });
 };

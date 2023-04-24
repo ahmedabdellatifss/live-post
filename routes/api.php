@@ -19,7 +19,7 @@ use PHPUnit\TextUI\XmlConfiguration\Group;
 */
 Route::prefix('v1')
     ->middleware([
-        'auth:sanctum'
+        //'auth:sanctum'
     ])
     ->group(function(){
         RouteHelper::includeRouteFiles(__DIR__.'/api/v1');
