@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Notification;
 
 use App\Http\Requests\UpdatePostRequest;
 use App\Rules\IntegerArray;
 use App\Http\Resources\PostResource;
 use App\Repositories\PostRepository;
 use App\Http\Requests\PostStoreRequest;
+use App\Notifications\PostSharedNotification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -145,6 +148,8 @@ class PostController extends Controller
             'post' => $post->id,
         ]);
 
+        $user = User::query()->whereIn('id', $request->user_ids)->get();
+        Notification::send($user, new PostSharedNotification($post, $url));
         return new JsonResponse([
             'data' => $url,
         ]);
