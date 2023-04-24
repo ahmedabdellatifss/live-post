@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Support\Facades\URL;
 
 use App\Http\Requests\UpdatePostRequest;
 use App\Rules\IntegerArray;
@@ -127,6 +128,25 @@ class PostController extends Controller
         $post = $repository->forceDelete($post);
         return new JsonResponse([
             'data' => 'success'
+        ]);
+    }
+
+    /**
+     * Share a specified post from storage.
+     * @response 200 {
+            "data": "signed url..."
+     * }
+     * @param  \App\Models\Post  $post
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function share(Request $request, Post $post)
+    {
+        $url = URL::temporarySignedRoute('shared.post', now()->addDays(30), [
+            'post' => $post->id,
+        ]);
+
+        return new JsonResponse([
+            'data' => $url,
         ]);
     }
 }
