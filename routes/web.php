@@ -51,9 +51,11 @@ if(\Illuminate\Support\Facades\App::environment('local')){
 
     Route::get('playground' , function(){
 
-        $url = URL::temporarySignedRoute('share-video', now()->addSeconds(30),[
-            'video'=> 123
-        ]);
-        return $url;
+        event(new \App\Events\PlaygroundEvent());
+        // $url = URL::temporarySignedRoute('share-video', now()->addSeconds(30),[
+        //     'video'=> 123
+        // ]);
+        // return $url;
+        return null;
     });
 };

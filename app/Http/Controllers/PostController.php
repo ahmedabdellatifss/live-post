@@ -148,8 +148,14 @@ class PostController extends Controller
             'post' => $post->id,
         ]);
 
+        // send notification using Notification Facade
         $user = User::query()->whereIn('id', $request->user_ids)->get();
         Notification::send($user, new PostSharedNotification($post, $url));
+
+        // or you can use notify in the user model
+        // $user = User::query()->find(1);
+        // $user->notify(new PostSharedNotification($post, $url));
+
         return new JsonResponse([
             'data' => $url,
         ]);
