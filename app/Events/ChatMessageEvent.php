@@ -10,18 +10,19 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class PlaygroundEvent implements ShouldBroadcast
+class ChatMessageEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    private string $message;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(string $message)
     {
-        //
+        $this->message = $message;
     }
 
     /**
@@ -31,12 +32,12 @@ class PlaygroundEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('public.playground.1');
+        return new Channel('public.chat.1');
     }
 
     // to change the event name
     public function broadcastAs(){
-        return 'playground';
+        return 'chat-message';
     }
 
     // To attach data with event  to used by the frontend
@@ -44,7 +45,7 @@ class PlaygroundEvent implements ShouldBroadcast
     public function broadcastWith(){
         return[
 
-            'heya'=> 123
+            'message'=> $this->message
         ];
     }
 
