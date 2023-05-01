@@ -7,6 +7,9 @@ const listMessage = document.getElementById('list-messages');
 const inputEmail = document.getElementById('input-email');
 const inputPassword = document.getElementById('input-password');
 const avatars = document.getElementById('avatars');
+const spanTyping = document.getElementById('span-typing')
+
+
 form.addEventListener('submit', function (event) {
     event.preventDefault();
     const userInput = inputMessage.value;
@@ -114,7 +117,16 @@ document.getElementById('form-login').addEventListener('submit', function (event
         .then(() => {
             const channel = Echo.join('presence.chat.1');
 
+            inputMessage.addEventListener('input', function(event){
+                if(inputMessage.value.length === 0){
+                    channel.whisper('stop-typing')
+                }else{
+                    channel.whisper('typing', {
+                        email: email
+                    })
+                }
 
+            })
             channel.here((users) => {
                 usersOnline = [...users];
                 renderAvatars();
@@ -141,6 +153,13 @@ document.getElementById('form-login').addEventListener('submit', function (event
                     addChatMessage(event.user.name, message);
                 })
 
+                .listenForWhisper('typing', (event)=>{
+                    spanTyping.textContent = event.email + ' is typing...'
+                })
+
+                .listenForWhisper('stop-typing', (event)=>{
+                    spanTyping.textContent = '';
+                })
 
         })
 
