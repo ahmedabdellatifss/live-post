@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Websockets\SocketHandler\UpdatePostSocketHandler;
+use BeyondCode\LaravelWebSockets\Facades\WebSocketsRouter;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,6 +38,9 @@ Route::get('/shared/posts/{post}', function (\Illuminate\Http\Request $request, 
     return "Specially made just for you 💕 ;) Post id: {$post->id}";
 
 })->name('shared.post')->middleware('signed');
+
+
+WebSocketsRouter::webSocket('/socket/update-post', UpdatePostSocketHandler::class);
 
 
 if(\Illuminate\Support\Facades\App::environment('local')){
